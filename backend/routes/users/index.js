@@ -1,6 +1,6 @@
 import express from 'express';
 import { Account, ID } from 'appwrite';
-import { Query } from 'node-appwrite';
+
 
 const router = express.Router();
 
