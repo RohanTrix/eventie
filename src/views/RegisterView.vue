@@ -5,7 +5,7 @@
 
             <Card>
                 <template #header>
-                    <img class="overflow-hidden" src="src/assets/images/event-login.jpg" alt="">
+                    <img class="overflow-hidden" src="/images/event-login.jpg" alt="">
                 </template>
                 <template #title>
                     <h2 class="text decoration-solid text-2xl font-mono">Create an account</h2>
