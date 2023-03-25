@@ -14,7 +14,7 @@ import ToastService from 'primevue/toastservice';
 import "primevue/resources/primevue.min.css";
 //icons
 import "primeicons/primeicons.css";
-
+import '@formkit/themes/genesis'
 
 //Pinia
 import { createPinia } from "pinia";
