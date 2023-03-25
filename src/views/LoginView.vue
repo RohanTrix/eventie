@@ -1,7 +1,7 @@
 <template>
     <main class="h-full w-min flex items-center ">
 
-        <form @submit.prevent="login">
+        <form @submit.prevent="handleLogin">
             <Card>
                 <template #header>
                     <img class="overflow-hidden" src="src/assets/images/event-login.jpg" alt="">
@@ -35,38 +35,19 @@ import Card from 'primevue/card';
 import Button from 'primevue/button';
 
 
+
 import { useLoginStore } from '@/stores/login'
+import { storeToRefs } from 'pinia';
 
-import { useRouter } from 'vue-router';
+const store = useLoginStore()
+const { email, passwd } = storeToRefs(store);
+const { login } = store;
 
-import Toast from 'primevue/toast';
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
 
-const email = ref('')
-const passwd = ref('')
-
-const loginStore = useLoginStore();
-const { setLoggedIn } = loginStore;
-
-const auth = getAuth();
-auth.onAuthStateChanged(user => {
-    console.log(user);
-})
-const router = useRouter();
-const login = async () => {
-    await signInWithEmailAndPassword(auth, email.value, passwd.value).then((data) => {
-        console.log('Sucess')
-
-        toast.add({ severity: 'success', summary: 'Login Successful', detail: 'Login Success', life: 3000 });
-        setLoggedIn();
-        router.push('/')
-        
-    })
-        .catch((error) => {
-            toast.add({ severity: 'error', summary: error.message, detail: 'Please login again', life: 3000 });
-        })
+const handleLogin = async () => {
+    login();
 }
+
 </script>
 
 

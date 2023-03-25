@@ -37,11 +37,11 @@ import { storeToRefs } from 'pinia';
 
 const store = useLoginStore()
 const { email, passwd } = storeToRefs(store);
-// const { register } = store;
+const { register } = store;
 
 
 const handleRegister = async () => {
-    store.register();
+    register();
 }
 
 
