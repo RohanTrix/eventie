@@ -49,3 +49,12 @@ const props = defineProps({
 })
 
 </script>
+
+
+<style scoped>
+
+.p-card {
+    height: min-content;
+}
+
+</style>
