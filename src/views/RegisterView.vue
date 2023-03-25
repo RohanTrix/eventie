@@ -1,51 +1,47 @@
 <template>
-    <form @submit.prevent="register">
+    <main class="h-full w-min flex items-center ">
 
-        <Card>
-            <template #header>
-                <img class="overflow-hidden" src="src/assets/images/event-login.jpg" alt="">
-            </template>
-            <template #title>
-                <h2 class="text decoration-solid text-2xl font-mono">Create an account</h2>
-            </template>
-            <template #content>
-                <section class="mb-4">
+        <form @submit.prevent="handleRegister">
 
-                    <h4 class="mb-2 text-xl">Email</h4>
-                    <InputText v-model="email" placeholder="Email" />
-                    <h4 class="mt-2 mb-2 text-xl">Password</h4>
-                    <Password v-model="passwd" placeholder="Password" toggleMask />
-                </section>
-                <Button type="submit" label="Register" size="small" icon="pi pi-check" />
+            <Card>
+                <template #header>
+                    <img class="overflow-hidden" src="src/assets/images/event-login.jpg" alt="">
+                </template>
+                <template #title>
+                    <h2 class="text decoration-solid text-2xl font-mono">Create an account</h2>
+                </template>
+                <template #content>
+                    <section class="mb-4">
 
-            </template>
-        </Card>
-    </form>
+                        <h4 class="mb-2 text-xl">Email</h4>
+                        <InputText v-model="email" placeholder="Email" />
+                        <h4 class="mt-2 mb-2 text-xl">Password</h4>
+                        <Password v-model="passwd" placeholder="Password" toggleMask />
+                    </section>
+                    <Button type="submit" label="Register" size="small" icon="pi pi-check" />
+
+                </template>
+            </Card>
+        </form>
+    </main>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-const email = ref('')
-const passwd = ref('')
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import Card from 'primevue/card';
+import Button from 'primevue/button';
 
-const auth = getAuth();
-auth.onAuthStateChanged(user => {
-    console.log(user);
+import { useLoginStore } from '@/stores/login.js'
+import { storeToRefs } from 'pinia';
 
-})
+const store = useLoginStore()
+const { email, passwd } = storeToRefs(store);
+const { register } = store;
 
-const register = async () => {
-    await createUserWithEmailAndPassword(auth, email.value, passwd.value).then((data) => {
-        console.log('Sucess')
 
-        toast.add({ severity: 'success', summary: 'Register Successful', detail: 'Register Success', life: 3000 });
-        
-        router.push('/')
-    })
-        .catch((error) => {
-            toast.add({ severity: 'error', summary: 'Register Failed', detail: 'Please Register again', life: 3000 });
-        })
+const handleRegister = async () => {
+    register();
 }
 
 
