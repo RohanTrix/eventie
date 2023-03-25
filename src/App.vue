@@ -1,7 +1,6 @@
 <script setup>
 import { RouterView, useRouter } from "vue-router"
 import { useLoginStore } from '@/stores/login'
-import { storeToRefs } from 'pinia'
 import { onMounted } from "vue";
 const router = useRouter();
 
