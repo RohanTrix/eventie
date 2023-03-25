@@ -3,8 +3,17 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello World!');
+router.get('/', async (req, res) => {
+    const {config, databases} = req.app.locals;
+    try {
+        const documents = await databases.listDocuments(config.DATABASE_ID, config.COLLECTION_ID);
+        res.json(documents)
+    } catch (error) {
+            res.status(500).json({
+                message: "Error while fetching event",
+                success: false,
+            })
+    }
 })
 
 router.get('/:id', async (req, res) => {
