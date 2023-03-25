@@ -7,6 +7,27 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
 })
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const {config, databases} = req.app.locals;
+    try {
+        const document = await databases.getDocument(config.DATABASE_ID, config.COLLECTION_ID, id);
+        res.json(document)
+    } catch (error) {
+        if (error.code === 404) {
+            res.status(404).json({
+                message: "Event not found",
+                success: false,
+            })
+        } else {
+            res.status(500).json({
+                message: "Error while fetching event",
+                success: false,
+            })
+        }
+    }
+})
+
 router.post('/create', async (req, res) => {
     const { imgUrl, title, datetime, details } = req.body;
     const {config, databases} = req.app.locals;
