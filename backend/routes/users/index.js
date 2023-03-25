@@ -1,5 +1,6 @@
 import express from 'express';
 import { Account, ID } from 'appwrite';
+import { Query } from 'node-appwrite';
 
 const router = express.Router();
 
@@ -24,6 +25,28 @@ router.get('/me', async (req, res) => {
                 success: false,
             });
         }
+    }
+})
+
+router.get('/events', async (req, res) => {
+    const {config, databases} = req.app.locals;
+    const { user } = req.query;
+    console.log('user', user)
+    try {
+        const {documents: allDocuments} = await databases.listDocuments(
+            config.DATABASE_ID,
+            config.COLLECTION_ID,
+        )
+        const documents = allDocuments.filter(event => {
+            return event.participants.includes(user)
+        })
+        res.json(documents)
+    } catch (error) {
+            console.error(error)
+            res.status(500).json({
+                message: "Error while fetching event",
+                success: false,
+            })
     }
 })
 
