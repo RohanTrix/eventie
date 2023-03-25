@@ -7,22 +7,18 @@
                 <Button label="Logout" icon="pi pi-sign-out" @click="handleLogout" />
             </nav>
             <div class="px-8 py-4">
-                <h1 class="text-black text-3xl font-medium">All Events</h1>
+                <h1 class="text-black text-3xl font-medium">Available Events</h1>
             </div>
             <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
-                <EventCard v-for="event in events" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
+                <EventCard v-for="event in availableEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
                     :datetime="event.datetime" :title="event.name" :details="event.details" />
-                <!-- <EventCard :eventId="2020" imgUrl="https://picsum.photos/id/237/200/300"
-                    datetime="2 Jan 2022, 9:30PM" title="Party Time" details="Get ready to have fun" /> -->
             </div>
             <div class="px-8 py-4">
                 <h1 class="text-black text-3xl font-medium">Registered Events</h1>
             </div>
             <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
-                <EventCard v-for="n in 4" :key="n" :eventId="null" imgUrl="https://picsum.photos/id/5/200/300"
-                    :datetime="null" :title="null" :details="null" />
-                <!-- <EventCard :eventId="2020" imgUrl="https://picsum.photos/id/237/200/300"
-                datetime="2 Jan 2022, 9:30PM" title="Party Time" details="Get ready to have fun" /> -->
+                <EventCard v-for="event in registeredEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
+                    :datetime="event.datetime" :title="event.name" :details="event.details" />
             </div>
         </div>
     </main>
@@ -47,18 +43,25 @@ const store = useLoginStore()
 const { user } = storeToRefs(store);
 const { logout } = store;
 
-const events = ref([{}])
+const availableEvents = ref(null)
+const registeredEvents = ref(null)
 
-onBeforeMount(async () => {
-    // email -> [{}]
+
+const reloadEvents = async () => {
     const { data } = await api.get('/api/events', {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json',
         },
     })
-    events.value = data.documents
-    console.log(events)
+    registeredEvents.value = data.documents.filter(event => event.participants.includes(user.value.id))
+    availableEvents.value = data.documents.filter(event => !event.participants.includes(user.value.id))
+}
+
+onBeforeMount(async () => {
+    // email -> [{}]
+    reloadEvents()
+    // console.log(events)
 })
 
 const handleLogout = () => {
