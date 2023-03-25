@@ -16,6 +16,32 @@ router.get('/', async (req, res) => {
             })
     }
 })
+
+
+router.delete('/CheckedIn', async (req, res) => {
+    const { QrCode } = req.body;
+   const [userId, eventId ]  = QrCode.split('🔴');
+    const {config, databases} = req.app.locals;
+
+    const eventData = await databases.getDocument(config.DATABASE_ID, config.COLLECTION_ID, eventId);
+    console.log(eventData);
+    const participants = eventData.participants.filter((id) => id !== userId);
+    const data =  {
+        participants: [... new Set(participants)]
+    }
+    try {
+        const response = await databases.updateDocument(config.DATABASE_ID, config.COLLECTION_ID, eventId, JSON.stringify(data));
+        res.json(response)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "Error while checking in for event",
+            success: false,
+        })
+    }
+})
+
+
 router.get('/fetchTheQR', async (req, res) => {
   
     const {config, databases ,  avatars} = req.app.locals;
@@ -110,7 +136,7 @@ router.post('/unregister', async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message: "Error while registering for event",
+            message: "Error while unregistering the event",
             success: false,
         })
     }
