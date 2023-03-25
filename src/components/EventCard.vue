@@ -24,13 +24,14 @@
 </template>
 
 <script setup>
+import Button from 'primevue/button';
 import Card from 'primevue/card';
 import {ref, onBeforeMount } from 'vue';
 
 const isRegistered = ref(false)
 onBeforeMount(() => {
     // Call API to check if currentUser(firebase check)
-    // is already inn registered list or not
+    // is already in registered list or not
     // Based on that, set isRegistered
 })
 
