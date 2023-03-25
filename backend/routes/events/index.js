@@ -3,6 +3,7 @@ import express from 'express';
 
 const router = express.Router();
 
+
 router.get('/', async (req, res) => {
     const {config, databases} = req.app.locals;
     try {
@@ -15,6 +16,25 @@ router.get('/', async (req, res) => {
             })
     }
 })
+router.get('/fetchTheQR', async (req, res) => {
+  
+    const {config, databases ,  avatars} = req.app.locals;
+    const {userID ,  eventID } = req.body
+    const Code = userID + "🔴" + eventID
+    const promise = avatars.getQR(Code);
+
+    promise.then(function (response) {
+        console.log(Code);
+        const src = 'data:image/png;base64,' + Buffer.from(response).toString('base64');
+        res.send(src)
+    }, function (error) {
+        res.status(500).json({
+            message: "Error while getting the qr image",
+            success: false,
+        })
+    })
+})
+
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -54,7 +74,7 @@ router.post('/create', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     const { userId, eventId } = req.body;
-    const {config, databases} = req.app.locals;
+    const {config, databases , avatars} = req.app.locals;
 
     const eventData = await databases.getDocument(config.DATABASE_ID, config.COLLECTION_ID, eventId);
     console.log(eventData);
