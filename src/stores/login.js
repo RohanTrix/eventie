@@ -1,18 +1,34 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-export const useLoginStore = defineStore(
-  "login",
-  () => {
-    const user = ref(null);
-    const loggedIn = ref(false);
-    const setLoggedIn = () => {
-      loggedIn.value = true;
-    };
-    const setLoggedOut = () => {
-      loggedIn.value = false;
-    };
+import { auth } from "./firebaseconfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useRouter } from "vue-router";
 
-    return { user, loggedIn, setLoggedIn, setLoggedOut };
+export const useLoginStore = defineStore(
+  "storeAuth",
+  () => {
+    const router = useRouter();
+    const email = ref("");
+    const passwd = ref("");
+
+    const register = async () => {
+      createUserWithEmailAndPassword(
+          auth,
+          email.value,
+          passwd.value
+        ).then(() => {
+          console.log('sucess')
+          router.push('/')
+        }).catch((error) => {
+          alert(error);
+        });
+    };
+    return { email, passwd, register };
   },
   { persist: true }
 );

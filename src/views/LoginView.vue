@@ -22,25 +22,23 @@
                 </template>
             </Card>
         </form>
-        <Teleport to="body">
-
-            <Toast />
-        </Teleport>
 
     </main>
 </template>
 
 <script setup>
+import { ref } from "vue"
+
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { ref } from "vue"
+
 import { useLoginStore } from '@/stores/login'
 
 import { useRouter } from 'vue-router';
+
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
