@@ -2,16 +2,19 @@
 import { RouterView, useRouter } from "vue-router"
 import { useLoginStore } from '@/stores/login'
 import { storeToRefs } from 'pinia'
+import { onMounted } from "vue";
 const router = useRouter();
 
 
 const store = useLoginStore()
-const {} = storeToRefs()
+
+onMounted(() => {
+  store.init();
+})
 
 </script>
 
 <template>
-  <Toast />
   <RouterView />
 </template>
 
