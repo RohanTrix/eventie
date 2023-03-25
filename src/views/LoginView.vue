@@ -2,7 +2,7 @@
     <main class="h-full w-min flex items-center ">
 
         <form @submit.prevent="handleLogin">
-            <Card>
+            <Card class=" flex flex-col w-[350px]">
                 <template #header>
                     <img class="overflow-hidden" src="src/assets/images/event-login.jpg" alt="">
                 </template>
@@ -18,7 +18,7 @@
                         <Password v-model="passwd" placeholder="Password" toggleMask />
                     </section>
                     <Button type="submit" label="Log In" size="small" icon="pi pi-check" />
-
+                    <Button label="Link" link><RouterLink to="/register">Create an account?</RouterLink></Button>
                 </template>
             </Card>
         </form>
@@ -33,7 +33,7 @@ import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
-
+import { RouterLink } from "vue-router";
 
 
 import { useLoginStore } from '@/stores/login'

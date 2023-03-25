@@ -4,7 +4,7 @@
       "_postman_id": "ff457fcc-1ce8-4022-a43f-53e98d0090f6",
       "name": "New Collection",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-      "updatedAt": "2023-03-25T12:52:09.000Z"
+      "updatedAt": "2023-03-25T14:04:42.000Z"
     },
     "item": [
       {
@@ -95,7 +95,7 @@
           "header": [],
           "body": {
             "mode": "raw",
-            "raw": "{\n\n    \"userId\": \"als\",\n    \"eventId\": \"641ed50a889b70a5bade\"\n}",
+            "raw": "{\n\n    \"userId\": \"alslo\",\n    \"eventId\": \"641ed50a889b70a5bade\"\n}",
             "options": { "raw": { "language": "json" } }
           },
           "url": {
@@ -156,6 +156,23 @@
             "host": ["localhost"],
             "port": "6000",
             "path": ["api", "events"]
+          }
+        },
+        "response": []
+      },
+      {
+        "name": "Event for a user",
+        "id": "ec21e21c-7198-4b60-9d93-ca30951922e5",
+        "protocolProfileBehavior": { "disableBodyPruning": true },
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "localhost:6000/api/users/events?user=alsloss",
+            "host": ["localhost"],
+            "port": "6000",
+            "path": ["api", "users", "events"],
+            "query": [{ "key": "user", "value": "alsloss" }]
           }
         },
         "response": []

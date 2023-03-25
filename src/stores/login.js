@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 
+
 export const useLoginStore = defineStore(
   "storeAuth",
   () => {
@@ -61,7 +62,7 @@ export const useLoginStore = defineStore(
       email.value = "";
       passwd.value = "";
     };
-    return { user, email, passwd, register, login, logout };
+    return { user, email, passwd, register, login, logout, init };
   },
   { persist: true }
 );

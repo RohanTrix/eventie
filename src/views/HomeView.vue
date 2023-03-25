@@ -26,10 +26,18 @@ import { useLoginStore } from '@/stores/login.js'
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 
+import api from "@/stores/axiosUtils.js"
+
 const router = useRouter();
 const store = useLoginStore()
-const { email, passwd } = storeToRefs(store);
 const { logout } = store;
+
+const events = ref([{}])
+
+onBeforeMount(() => {
+    // email -> [{}]
+    
+})
 
 const handleLogout =() => {
        logout();
