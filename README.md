@@ -13,6 +13,7 @@ Eventie is designed to help event organizers manage event registration and atten
 ### Tech stack
 <img src="https://appwrite.io/images/appwrite.svg" height=40 alt="Appwrite logo"></img>
 ![Tech Stacks](https://skills.thijs.gg/icons?i=html,css,js,nodejs,tailwindcss,vue,expressjs)
+<img src="https://seeklogo.com/images/P/pinia-logo-51BF712FB0-seeklogo.com.png" height=40 alt="Pinia logo"></img>
 <img src="https://primefaces.org/cdn/primevue/images/primevue-logo-dark.svg" height=40 alt="PrimeVue logo"></img>
 
 - Appwrite
@@ -57,8 +58,10 @@ Eventie is designed to help event organizers manage event registration and atten
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-#### Customize configuration
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+#### Setup frontend
+1. Install packages in package.json
+2. Run `npm run build` on command prompt
+3. Finally, `npm run preview`
 
 #### Setup backend
 1. Install appwrite according to [official guide](https://appwrite.io/docs/installation). If you use a custom port or hostname for appwrite, make sure to replace `localhost` with `[HOST]:[PORT]` in following instructions.
