@@ -1,5 +1,5 @@
 <template>
-    <Button link class="hover:bg-bluegray-400">
+    <Button link class="w-[400px] hover:bg-bluegray-400">
 
         <main class="min-h-min">
             <Card>
@@ -9,23 +9,24 @@
                 <template #title>
                     {{ title }}
                 </template>
-            <template #subtitle>
-                {{ useDateFormat(datetime, "YYYY-MM-DD   HH:mm:ss").value }}
-            </template>
-            <template #content>
-                {{ details }}
-            </template>
-            <template #footer>
-                <Button v-if="!isRegistered" icon="pi pi-check" label="Register" @click="registerEvent" />
-                <Button severity="success" v-else label="Show QR" @click="getImage">
-                </Button>
-                <!-- To be replaced with QR code -->
-                
-            </template>
-        </Card>
-        <Toast />
-    </main>
-</Button>
+                <template #subtitle>
+                    <strong> Date: </strong> {{ useDateFormat(datetime, "YYYY-MM-DD HH:mm:ss").value.split(" ")[0] }}
+                    <strong>Time: </strong> {{ useDateFormat(datetime, "YYYY-MM-DD HH:mm:ss").value.split(" ")[1] }}
+                </template>
+                <template #content>
+                    {{ details }}
+                </template>
+                <template #footer>
+                    <Button v-if="!isRegistered" icon="pi pi-check" label="Register" @click="registerEvent" />
+                    <Button severity="success" v-else label="Show QR" @click="getImage">
+                    </Button>
+                    <!-- To be replaced with QR code -->
+
+                </template>
+            </Card>
+            <Toast />
+        </main>
+    </Button>
 </template>
 
 <script setup>
@@ -34,7 +35,7 @@ import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 
-import { ref, onBeforeMount, toRefs, computed  } from 'vue';
+import { ref, onBeforeMount, toRefs, computed } from 'vue';
 import api from "@/stores/axiosUtils.js"
 
 import { storeToRefs } from 'pinia';
@@ -86,18 +87,18 @@ const registerEvent = async () => {
     await api.post('/api/events/register', data)
         .then(response => {
             toast.add({ severity: 'success', summary: 'Registration Successful', detail: 'Success', life: 3000 });
-            setTimeout(() => {}, 3000);
+            setTimeout(() => { }, 3000);
         })
         .catch(error => {
             console.log(error);
         });
-    
+
     router.go()
 }
 
 
 const getImage = async () => {
-    const response = await api.get('/api/events/fetchTheQR',  { userID: user.value.id, eventID: eventId.value })
+    const response = await api.get('/api/events/fetchTheQR', { userID: user.value.id, eventID: eventId.value })
     emit('showQR', response.data);
 }
 
