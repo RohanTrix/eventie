@@ -43,7 +43,7 @@ router.delete('/CheckedIn', async (req, res) => {
 
 
 router.get('/fetchTheQR', async (req, res) => {
-  
+
     const {config, databases ,  avatars} = req.app.locals;
     const {userID ,  eventID } = req.body
     const Code = userID + "🔴" + eventID
@@ -80,6 +80,29 @@ router.get('/:id', async (req, res) => {
                 success: false,
             })
         }
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { config, databases } = req.app.locals;
+    try {
+        const document = await databases.deleteDocument(config.DATABASE_ID, config.COLLECTION_ID, id);
+        res.json(document);
+    } catch (error) {
+        if (error.code === 404) {
+            res.json({});
+        } else {
+            res.status(500).json({
+                message: "Error while deleting event",
+                success: false,
+            });
+        }
+    }
+    try {
+        // const imageFile = await storage.
+    } catch (error) {
+
     }
 })
 
