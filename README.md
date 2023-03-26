@@ -11,8 +11,9 @@ Eventie is designed to help event organizers manage event registration and atten
 
 ## Project structure
 ### Tech stack
-<img src="https://appwrite.io/images/appwrite.svg" height=40></img>
-![HTML](https://skills.thijs.gg/icons?i=html,css,js,nodejs,tailwindcss,vue,expressjs)<br>
+<img src="https://appwrite.io/images/appwrite.svg" height=40 alt="Appwrite logo"></img>
+![Tech Stacks](https://skills.thijs.gg/icons?i=html,css,js,nodejs,tailwindcss,vue,expressjs)
+<img src="https://primefaces.org/cdn/primevue/images/primevue-logo-dark.svg" height=40 alt="PrimeVue logo"></img>
 
 - Appwrite
 - HTML5
