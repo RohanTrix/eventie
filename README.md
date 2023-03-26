@@ -43,11 +43,17 @@ Eventie is designed to help event organizers manage event registration and atten
     └── views                       Vue views
 </pre>
 </details>
+
 ## Setup
+
 #### Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
+#### Customize configuration
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+#### Setup backend
 1. Install appwrite according to [official guide](https://appwrite.io/docs/installation). If you use a custom port or hostname for appwrite, make sure to replace `localhost` with `[HOST]:[PORT]` in following instructions.
 2. Visit `http://localhost` and follow the instructions. Create a new project and a new user.
 3. Create a new file called `.config.js` in `/PROJECT_ROOT/backend/.config.json`  with following attributes:
@@ -70,12 +76,8 @@ Project id can be found in Project Overview page in Appwrite console.
 See [Appwrite API Key](https://appwrite.io/docs/keys) to generate an API key.
 
 
-#### Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 #### Project Setup
-
 ```sh
 npm install;
 cd backend;
