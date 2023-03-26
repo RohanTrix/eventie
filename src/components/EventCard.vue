@@ -10,7 +10,7 @@
                     {{ title }}
                 </template>
             <template #subtitle>
-                {{ datetime }}
+                {{ useDateFormat(datetime, "YYYY-MM-DD   HH:mm:ss").value }}
             </template>
             <template #content>
                 {{ details }}
@@ -34,7 +34,7 @@ import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 
-import { ref, onBeforeMount, toRefs } from 'vue';
+import { ref, onBeforeMount, toRefs, computed  } from 'vue';
 import api from "@/stores/axiosUtils.js"
 
 import { storeToRefs } from 'pinia';
@@ -43,7 +43,9 @@ import { useRouter } from 'vue-router';
 
 import { useNow, useDateFormat } from '@vueuse/core'
 
-
+const formattedDatetime = computed(() => {
+    useDateFormat(datetime.value, "YYYY-MM-DD   HH:mm:ss")
+})
 
 const router = useRouter()
 const store = useLoginStore()
