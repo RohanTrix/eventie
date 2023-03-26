@@ -1,6 +1,6 @@
 # Eventie
 ## Description
-This web application is designed to help event organizers manage event registration and attendance tracking in a more efficient and organized way. With this application, event organizers can create events, register users to events, and mark users as participated using QR codes.
+Eventie is designed to help event organizers manage event registration and attendance tracking in a more efficient and organized way. With this application, event organizers can create events, register users to events, and mark users as participated using QR codes.
 
 ### Features
 - Event Creation: With this application, event organizers can easily create and set up events by providing event details such as event name, description, date, and time.
