@@ -1,27 +1,44 @@
 <template>
-    <main class="h-full w-min flex items-center ">
+    <main class="grid place-items-center w-screen custom-bg-gradient overflow-visible">
 
-        <form @submit.prevent="handleLogin">
-            <Card class=" flex flex-col w-[350px]">
-                <template #header>
-                    <img class="overflow-hidden" src="/images/event-login.jpg" alt="">
-                </template>
-                <template #title>
-                    <h2 class="text decoration-solid text-2xl font-mono">Log In</h2>
-                </template>
-                <template #content>
-                    <section class="mb-4">
 
-                        <h4 class="mb-2 text-xl">Email</h4>
-                        <InputText v-model="email" placeholder="Email" />
-                        <h4 class="mt-2 mb-2 text-xl">Password</h4>
-                        <Password v-model="passwd" placeholder="Password" toggleMask />
-                    </section>
-                    <Button type="submit" label="Log In" size="small" icon="pi pi-check" />
-                    <Button label="Link" link><RouterLink to="/register">Create an account?</RouterLink></Button>
-                </template>
-            </Card>
-        </form>
+
+        <div class="p-4 w-full h-screen  flex justify-center items-center">
+            <div class="px-8 py-10 bg-white shadow-lg border-4 border-indigo-600 max-w-lg w-full h-auto rounded-md">
+
+                <form @submit.prevent="handleLogin" class="space-y-6">
+                    <div class="flex gap-x-2 items-center">
+                        <div class="p-2 bg-indigo-600 rounded-md w-12 h-12">
+                            <img src="https://cdn-icons-png.flaticon.com/512/124/124558.png" />
+                        </div>
+                        <h1 class="text-2xl text-gray-700 font-bold">Welcome Back</h1>
+                    </div>
+                    <div>
+                        
+                        <label for="email"
+                            class="text-xs text-gray-500 font-medium tracking-wider uppercase">Email</label>
+                        <input v-model="email" id="email" type="email" placeholder="johndoe@gmail.com"
+                                class="mt-1.5 text-gray-800 bg-gray-100 w-full block px-4 py-3 rounded tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-200">
+                    </div>
+                    <div>
+                        <label for="password"
+                            class="text-xs text-gray-500 font-medium tracking-wider uppercase">Password</label>
+                        <input v-model="passwd" id="password" type="password" placeholder="********"
+                            class="mt-1.5 text-gray-800 bg-gray-100 w-full block px-4 py-3 rounded tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-200">
+                    </div>
+                    <button type="submit"
+                        class="w-full my-2 px-4 py-3 text-sm bg-indigo-600 text-white uppercase font-semibold rounded-md focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-indigo-600 hover:bg-indigo-700">Login</button>
+                    <div class="w-full text-gray-600 text-sm text-center">
+                        Don't have an account?
+                        <RouterLink to="/register" class="text-medium text-indigo-600 hover:underline">
+                            Register Now!
+                        </RouterLink>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
 
     </main>
 </template>
@@ -51,8 +68,24 @@ const handleLogin = async () => {
 </script>
 
 
-<style scoped>
+<style>
 .custom-bg-gradient {
-    background-image: linear-gradient(rgb(12, 110, 12), black 40%);
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
 }
+
+@keyframes gradient {
+    0% {
+		background-position: 0% 50%;
+	}
+	50% {
+        background-position: 100% 50%;
+	}
+	100% {
+        background-position: 0% 50%;
+	}
+}
+
 </style>

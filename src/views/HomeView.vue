@@ -1,35 +1,50 @@
 <template>
-    <main class="relative m-20">
+    <main class="relative mx-20 my-3">
         <div>
 
-            <nav class="flex justify-between mt-4">
-                
+            <nav class=" flex justify-between mt-2">
+
                 <div class="flex items-center">
                     <i style="font-size: 2rem" class="pi pi-calendar-plus"></i>
-                    <h1 class="text-green-500 text-2xl ml-2 mr-6 font-medium">{{ user.email }}</h1>
+                    <RouterLink to="/">
+
+                        <h1 class="text-green-500 text-2xl ml-2 mr-6 font-medium">Eventie</h1>
+                    </RouterLink>
                 </div>
                 <!-- <span class="p-buttonset"> -->
+                <div class="flex flex-col items-center">
+
+                    <h1 class="text-green-500 text-2xl pb-2 underline font-medium cursor-pointer">{{ user.email }}</h1>
+
                     <div class="flex items-center">
-                        <Button label="Create Event" icon="pi pi-plus" @click="visible=true" />
+                        <Button label="Create Event" icon="pi pi-plus" @click="visible = true" />
                         <div class="px-3"></div>
                         <Button label="Logout" icon="pi pi-sign-out" @click="handleLogout" />
 
                     </div>
+                </div>
                 <!-- </span> -->
             </nav>
+            <section>
+
+                <div class="px-8 py-4">
+                    <h1 class="text-4xl font-extrabold text-blue-600 dark:text-blue-500"><span
+                            class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Available
+                            Events</span></h1>
+                </div>
+                <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
+                    <EventCard v-for="event in availableEvents" :key="event.$id" :eventId="event.$id"
+                        :imgUrl="event.imageUrl" :datetime="event.datetime" :title="event.name" :details="event.details" />
+                </div>
+            </section>
             <div class="px-8 py-4">
-                <h1 class="text-black text-3xl font-medium">Available Events</h1>
+                <h1 class="text-4xl font-extrabold text-blue-600 dark:text-blue-500"><span
+                        class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Registered
+                        Events</span></h1>
             </div>
             <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
-                <EventCard v-for="event in availableEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
-                    :datetime="event.datetime" :title="event.name" :details="event.details" />
-            </div>
-            <div class="px-8 py-4">
-                <h1 class="text-black text-3xl font-medium">Registered Events</h1>
-            </div>
-            <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
-                <EventCard @showQR="showModalQr" v-for="event in registeredEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
-                    :datetime="event.datetime" :title="event.name" :details="event.details" />
+                <EventCard @showQR="showModalQr" v-for="event in registeredEvents" :key="event.$id" :eventId="event.$id"
+                    :imgUrl="event.imageUrl" :datetime="event.datetime" :title="event.name" :details="event.details" />
             </div>
         </div>
         <!-- Create Event Modal -->

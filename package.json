@@ -10,6 +10,7 @@
   "dependencies": {
     "@formkit/themes": "^0.16.4",
     "@formkit/vue": "^0.16.4",
+    "@vueuse/core": "^9.13.0",
     "appwrite": "^10.2.0",
     "axios": "^1.3.4",
     "firebase": "^9.18.0",

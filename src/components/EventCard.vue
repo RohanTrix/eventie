@@ -1,12 +1,14 @@
 <template>
-    <main class="p-4 min-h-min">
-        <Card>
-            <template #header>
-                <img class="w-auto h-60" :src="imgUrl" alt="">
-            </template>
-            <template #title>
-                {{ title }}
-            </template>
+    <Button link class="hover:bg-bluegray-400">
+
+        <main class="min-h-min">
+            <Card>
+                <template #header>
+                    <img class="w-auto h-60" :src="imgUrl" alt="">
+                </template>
+                <template #title>
+                    {{ title }}
+                </template>
             <template #subtitle>
                 {{ datetime }}
             </template>
@@ -15,14 +17,15 @@
             </template>
             <template #footer>
                 <Button v-if="!isRegistered" icon="pi pi-check" label="Register" @click="registerEvent" />
-                <Button severity="success" v-else label="Download QR" @click="getImage">
+                <Button severity="success" v-else label="Show QR" @click="getImage">
                 </Button>
                 <!-- To be replaced with QR code -->
-
+                
             </template>
         </Card>
         <Toast />
     </main>
+</Button>
 </template>
 
 <script setup>
@@ -37,6 +40,10 @@ import api from "@/stores/axiosUtils.js"
 import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/stores/login.js'
 import { useRouter } from 'vue-router';
+
+import { useNow, useDateFormat } from '@vueuse/core'
+
+
 const router = useRouter()
 const store = useLoginStore()
 const { user } = storeToRefs(store);
