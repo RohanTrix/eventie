@@ -2,7 +2,7 @@
     <main class="p-4 min-h-min">
         <Card>
             <template #header>
-                <img :src="imgUrl" alt="">
+                <img class="w-auto h-60" :src="imgUrl" alt="">
             </template>
             <template #title>
                 {{ title }}
@@ -15,8 +15,10 @@
             </template>
             <template #footer>
                 <Button v-if="!isRegistered" icon="pi pi-check" label="Register" @click="registerEvent" />
-                <Button v-else label="Show QR" />
+                <Button severity="success" v-else label="Download QR" @click="getImage">
+                </Button>
                 <!-- To be replaced with QR code -->
+
             </template>
         </Card>
         <Toast />
@@ -38,7 +40,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const store = useLoginStore()
 const { user } = storeToRefs(store);
-
+const visible = ref(false)
 const toast = useToast();
 // const emit = defineEmits(['reloadEvents'])
 const props = defineProps({
@@ -49,6 +51,8 @@ const props = defineProps({
     details: String
 })
 const { eventId, imgUrl, title, datetime, details } = toRefs(props)
+
+const emit = defineEmits(['showQR'])
 
 const isRegistered = ref(false)
 onBeforeMount(async () => {
@@ -72,6 +76,7 @@ const registerEvent = async () => {
     await api.post('/api/events/register', data)
         .then(response => {
             toast.add({ severity: 'success', summary: 'Registration Successful', detail: 'Success', life: 3000 });
+            setTimeout(() => {}, 3000);
         })
         .catch(error => {
             console.log(error);
@@ -80,6 +85,11 @@ const registerEvent = async () => {
     router.go()
 }
 
+
+const getImage = async () => {
+    const response = await api.get('/api/events/fetchTheQR',  { userID: user.value.id, eventID: eventId.value })
+    emit('showQR', response.data);
+}
 
 </script>
 

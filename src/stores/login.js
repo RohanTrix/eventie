@@ -1,7 +1,12 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { account } from "./appwriteconfig";
-import { ID } from "appwrite";
+import { auth } from "./firebaseconfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { useRouter } from "vue-router";
 
 
@@ -14,50 +19,48 @@ export const useLoginStore = defineStore(
     const user = ref({});
 
     const init = () => {
-      // onAuthStateChanged(auth, (currentUser) => {
-      //   if (currentUser) {
-      //     user.value.id = currentUser.uid;
-      //     user.value.email = currentUser.email;
-      //     router.push("/");
-      //   } else {
-      //     user.value = {};
-      //     router.replace("/login");
-      //   }
-      // });
-    };
-
-    const login = async () => {
-      try {
-        const response = await account.createEmailSession(email.value, passwd.value);
-        console.log('loginResponse', response)
-        user.value.id = response.$id;
-        user.value.email = response.email;
-        router.replace({ name: "home" })
-      } catch (error) {
-        alert(error.message)
-      }
+      onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+          user.value.id = currentUser.uid;
+          user.value.email = currentUser.email;
+          router.push("/");
+        } else {
+          user.value = {};
+          router.replace("/login");
+        }
+      });
     };
 
     const register = async () => {
-      // @ts-ignore
-      const user_id = ID.unique();
-      try {
-        const response = await account.create(user_id, email.value, passwd.value);
-        await login();
-      } catch (error) {
-        alert(error.message)
-      }
+      createUserWithEmailAndPassword(auth, email.value, passwd.value)
+        .then(() => {
+          console.log("sucess");
+          router.push("/");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    };
+
+    const login = async () => {
+      const res = await signInWithEmailAndPassword(
+        auth,
+        email.value,
+        passwd.value
+      )
+        .then((res) => {
+          router.replace({ name: "home" });
+        })
+        .catch((error) => {
+          alert(error);
+        });
     };
 
     const logout = async () => {
-      try {
-        const response = await account.deleteSession('current');
-        router.replace({ name: "login" });
-        email.value = "";
-        passwd.value = "";
-      } catch (error) {
-        alert(error.message)
-      }
+      await signOut(auth);
+      router.replace({ name: "login" });
+      email.value = "";
+      passwd.value = "";
     };
     return { user, email, passwd, register, login, logout, init };
   },

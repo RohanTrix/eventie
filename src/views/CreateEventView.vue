@@ -16,6 +16,11 @@
 <script setup>
 import { config, storage } from '@/stores/appwriteconfig';
 import api from '@/stores/axiosUtils';
+import { useRouter } from 'vue-router';
+
+const emit = defineEmits(['eventCreated'])
+
+const router = useRouter()
 const createEvent = async (data) => {
     let newEventId = null;
     const eventData = {
@@ -27,15 +32,13 @@ const createEvent = async (data) => {
         const { data: dbData } = await api.post('/api/events/create', eventData);
         newEventId = dbData.$id;
         const bucketId = config.EVENT_IMAGE_BUCKET_ID;
-        const fileData = await storage.createFile(bucketId, newEventId, data.image[0].file);
-        const project = config.PROJECT_ID;
-        const imageUrl = new URL(`/storage/buckets/${bucketId}/files/${fileData.$id}/preview?project=${project}`, storage.client.config.endpoint).href;
-        console.log(eventData, fileData, imageUrl);
+        await storage.createFile(bucketId, newEventId, data.image[0].file);
     } catch (err) {
         if (newEventId) {
             await api.delete(`/api/events/${newEventId}`);
         }
     }
+    emit('eventCreated')
 }
 </script>
 

@@ -2,12 +2,20 @@
     <main class="relative m-20">
         <div>
 
-            <nav class="flex items-center mt-4">
-                <h1 class="text-green-500 text-2xl mr-6 font-medium">{{ user.email }}</h1>
-                <span class="p-buttonset">
-                    <Button label="Create Event" icon="pi pi-plus" @click="visible=true" />
-                    <Button label="Logout" icon="pi pi-sign-out" @click="handleLogout" />
-                </span>
+            <nav class="flex justify-between mt-4">
+                
+                <div class="flex items-center">
+                    <i style="font-size: 2rem" class="pi pi-calendar-plus"></i>
+                    <h1 class="text-green-500 text-2xl ml-2 mr-6 font-medium">{{ user.email }}</h1>
+                </div>
+                <!-- <span class="p-buttonset"> -->
+                    <div class="flex items-center">
+                        <Button label="Create Event" icon="pi pi-plus" @click="visible=true" />
+                        <div class="px-3"></div>
+                        <Button label="Logout" icon="pi pi-sign-out" @click="handleLogout" />
+
+                    </div>
+                <!-- </span> -->
             </nav>
             <div class="px-8 py-4">
                 <h1 class="text-black text-3xl font-medium">Available Events</h1>
@@ -20,13 +28,16 @@
                 <h1 class="text-black text-3xl font-medium">Registered Events</h1>
             </div>
             <div class="grid grid-cols-4 gap-4 items-center justify-start pl-8">
-                <EventCard v-for="event in registeredEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
+                <EventCard @showQR="showModalQr" v-for="event in registeredEvents" :key="event.$id" :eventId="event.$id" :imgUrl="event.imageUrl"
                     :datetime="event.datetime" :title="event.name" :details="event.details" />
             </div>
         </div>
         <!-- Create Event Modal -->
         <Dialog v-model:visible="visible" modal header="🎉 Create an Event!" :style="{ width: '50vw' }">
-            <CreateEventView />
+            <CreateEventView @eventCreated="eventCreated" />
+        </Dialog>
+        <Dialog v-model:visible="qrVisible" modal header="📷 QR Code" :style="{ width: '30' }">
+            <img :src="QRCodeImg" alt="">
         </Dialog>
     </main>
 </template>
@@ -43,11 +54,8 @@ import { storeToRefs } from 'pinia';
 import { useLoginStore } from '@/stores/login.js'
 
 import { ref, onBeforeMount } from 'vue';
-import { useRouter } from 'vue-router';
 
 import api from "@/stores/axiosUtils.js"
-
-const router = useRouter();
 
 const store = useLoginStore()
 const { user } = storeToRefs(store);
@@ -56,7 +64,7 @@ const { user } = storeToRefs(store);
 
 const { logout } = store;
 const visible = ref(false)
-
+const qrVisible = ref(false)
 
 const availableEvents = ref(null)
 const registeredEvents = ref(null)
@@ -69,6 +77,16 @@ const reloadEvents = async () => {
     })
     registeredEvents.value = data.documents.filter(event => event.participants.includes(user.value.id))
     availableEvents.value = data.documents.filter(event => !event.participants.includes(user.value.id))
+}
+const eventCreated = async () => {
+    visible.value = !visible.value
+    await reloadEvents();
+}
+const QRCodeImg = ref('')
+const showModalQr = (imgData) => {
+    qrVisible.value = true
+    QRCodeImg.value = imgData
+    // console.log(QRCodeImg)
 }
 
 onBeforeMount(async () => {
