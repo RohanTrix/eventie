@@ -30,9 +30,10 @@ export const useLoginStore = defineStore(
       try {
         const response = await account.createEmailSession(email.value, passwd.value);
         console.log('loginResponse', response)
-        user.value.id = response.$id;
-        user.value.email = response.email;
-        router.replace({ name: "home" })
+        user.value.id = response.userId;
+        const newUser = await account.get();
+        user.value.email = newUser.email;
+        router.push("/")
       } catch (error) {
         alert(error.message)
       }
@@ -55,6 +56,7 @@ export const useLoginStore = defineStore(
         router.replace({ name: "login" });
         email.value = "";
         passwd.value = "";
+        user.value = {};
       } catch (error) {
         alert(error.message)
       }
