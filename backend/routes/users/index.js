@@ -30,7 +30,7 @@ router.get('/me', async (req, res) => {
 
 router.get('/events', async (req, res) => {
     const {config, databases} = req.app.locals;
-    const { user } = req.query;
+    const { user } = req.body;
     console.log('user', user)
     try {
         const {documents: allDocuments} = await databases.listDocuments(
