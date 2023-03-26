@@ -11,11 +11,17 @@ Eventie is designed to help event organizers manage event registration and atten
 
 ## Project structure
 ### Tech stack
+<img src="https://appwrite.io/images/appwrite.svg" height=40></img>
+![HTML](https://skills.thijs.gg/icons?i=html,css,js,nodejs,tailwindcss,vue,expressjs)<br>
+
 - Appwrite
+- HTML5
+- CSS3
+- Javascript
+- Nodejs
+- Tailwind CSS
 - Vue.js
-- TailwindCSS
 - Express.js
-- Node.js
 
 ### Folder structure
 <details>
