@@ -1,0 +1,40 @@
+{
+    "projectId": "641ebd55a0f1abf25dd5",
+    "projectName": "Eventie",
+    "functions": [
+        {
+            "$id": "641ef4d6e179f800e98d",
+            "name": "twoway_sync",
+            "runtime": "node-16.0",
+            "path": "functions/twoway_sync",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [
+                "databases.641ec72a1988d2e3ed68.collections.*.documents.update"
+            ],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "641fbeff274aee2152ae",
+            "name": "SetImageUrl",
+            "runtime": "node-16.0",
+            "path": "functions/SetImageUrl",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [
+                "databases.*.collections.*.documents.create"
+            ],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}
