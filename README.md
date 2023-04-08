@@ -1,4 +1,4 @@
-# Eventie
+# [Eventie](https://youtu.be/wFLRVnLw1ig)
 ## Description
 Eventie is designed to help event organizers manage event registration and attendance tracking in a more efficient and organized way. With this application, event organizers can create events, register users to events, and mark users as participated using QR codes.
 
